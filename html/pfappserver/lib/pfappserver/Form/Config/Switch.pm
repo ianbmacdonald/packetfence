@@ -89,6 +89,12 @@ has_field 'AccessListMap' =>
    label => 'Role by access list',
    default => undef,
   );
+has_field 'UrlMap' =>
+  (
+   type => 'Toggle',
+   label => 'Role by Url',
+   default => undef,
+  );
 has_field 'cliAccess' =>
   (
    type => 'Toggle',
@@ -242,7 +248,7 @@ has_field macSearchesSleepInterval  =>
 
 has_block definition =>
   (
-   render_list => [ qw(description type mode group deauthMethod cliAccess VoIPEnabled uplink_dynamic uplink controllerIp controllerPort portalURL) ],
+   render_list => [ qw(description type mode group deauthMethod cliAccess VoIPEnabled uplink_dynamic uplink controllerIp controllerPort) ],
   );
 has_field 'SNMPVersion' =>
   (
@@ -434,16 +440,6 @@ has_field controllerPort =>
     },
   );
 
-has_field 'portalURL' =>
-  (
-   type => 'Text',
-   label => 'Portal URL',
-   tags => {
-       after_element => \&help_list,
-       help => 'Only for external captive portal, specify the URL of the captive portal that will be send back as a RADIUS attribute'
-    },
-  );
-
 =head1 METHODS
 
 =head2 options_inlineTrigger
@@ -485,6 +481,13 @@ sub field_list {
           };
         push(@$list, $role.'AccessList' => $field);
 
+        $field =
+          {
+           type => 'Text',
+           label => $role,
+          };
+        push(@$list, $role.'Url' => $field);
+
         # The VLAN mapping for default roles is mandatory for the default switch
         $field =
           {
@@ -504,7 +507,7 @@ sub field_list {
               };
             push(@$list, $role.'Vlan' => $field);
             push(@$list, $role.'Role' => $field);
-
+            push(@$list, $role.'Url' => $field);
             $field =
               {
                type => 'TextArea',
@@ -574,11 +577,12 @@ Dynamically build the block list of the roles mapping.
 sub build_block_list {
     my $self = shift;
 
-    my (@vlans, @roles, @access_lists);
+    my (@vlans, @roles, @access_lists, @urls);
     if ($self->form->roles) {
         @vlans = map { $_.'Vlan' } @SNMP::ROLES, map { $_->{name} } @{$self->form->roles};
         @roles = map { $_.'Role' } @SNMP::ROLES, map { $_->{name} } @{$self->form->roles};
         @access_lists = map { $_.'AccessList' } @SNMP::ROLES, map { $_->{name} } @{$self->form->roles};
+        @urls = map { $_.'Url' } @SNMP::ROLES, map { $_->{name} } @{$self->form->roles};
     }
 
     return
@@ -591,6 +595,9 @@ sub build_block_list {
        },
        { name => 'access_lists',
          render_list => \@access_lists,
+       },
+       { name => 'urls',
+         render_list => \@urls,
        }
       ];
 }
