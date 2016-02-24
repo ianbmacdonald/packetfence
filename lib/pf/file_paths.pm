@@ -75,6 +75,8 @@ our (
     $radius_filters_config_file,
     $billing_tiers_config_file,
     $dhcp_filters_config_file,
+    $portal_modules_config_file,
+    $portal_modules_default_config_file,
 );
 
 BEGIN {
@@ -127,6 +129,8 @@ BEGIN {
         $radius_filters_config_file
         $billing_tiers_config_file
         $dhcp_filters_config_file
+        $portal_modules_config_file
+        $portal_modules_default_config_file
     );
 }
 
@@ -193,6 +197,8 @@ $wmi_config_file = catfile($conf_dir,"wmi.conf");
 $radius_filters_config_file = catfile($conf_dir,"radius_filters.conf");
 $billing_tiers_config_file = catfile($conf_dir,"billing_tiers.conf");
 $dhcp_filters_config_file = catfile($conf_dir,"dhcp_filters.conf");
+$portal_modules_config_file = catfile($conf_dir,"portal_modules.conf");
+$portal_modules_default_config_file = catfile($conf_dir,"portal_modules.conf.defaults");
 
 $oui_url               = 'http://standards.ieee.org/regauth/oui/oui.txt';
 $dhcp_fingerprints_url = 'http://www.packetfence.org/dhcp_fingerprints.conf';
