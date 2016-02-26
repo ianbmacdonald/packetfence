@@ -49,7 +49,6 @@ Readonly our %ATTRIBUTES_MAP => (
 );
 
 has '+type' => (default => 'LDAP');
-has '+dynamic_routing_module' => (default => 'Authentication::Login');
 has 'host' => (isa => 'Maybe[Str]', is => 'rw', default => '127.0.0.1');
 has 'port' => (isa => 'Maybe[Int]', is => 'rw', default => 389);
 has 'connection_timeout' => ( isa     => 'Int', is => 'rw', default => 5 );
@@ -67,6 +66,15 @@ has 'email_attribute' => (isa => 'Maybe[Str]', is => 'rw', default => 'mail');
 our $logger = get_logger();
 
 =head1 METHODS
+
+=head2 dynamic_routing_module
+
+Which module to use for DynamicRouting
+
+=cut
+
+sub dynamic_routing_module { 'Authentication::Login' }
+
 
 =head2 available_attributes
 

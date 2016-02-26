@@ -23,7 +23,6 @@ extends 'pf::Authentication::Source::OAuthSource';
 has '+type' => (default => 'Twitter');
 has '+class' => (default => 'external');
 has '+unique' => (default => 1);
-has '+dynamic_routing_module' => (default => 'Authentication::OAuth::Twitter');
 has 'client_id' => (isa => 'Str', is => 'rw', required => 1, default => '<CONSUMER KEY>');
 has 'client_secret' => (isa => 'Str', is => 'rw', required => 1), default => '<CONSUMER SECRET>';
 has 'site' => (isa => 'Str', is => 'rw', default => 'https://api.twitter.com');
@@ -33,6 +32,14 @@ has 'redirect_url' => (isa => 'Str', is => 'rw', required => 1, default => 'http
 has 'protected_resource_url' => (isa => 'Str', is => 'rw', default => 'https://api.twitter.com/oauth/access_token');
 has 'domains' => (isa => 'Str', is => 'rw', required => 1, default => '*.twitter.com,twitter.com,*.twimg.com,twimg.com');
 has 'create_local_account' => (isa => 'Str', is => 'rw', default => 'no');
+
+=head2 dynamic_routing_module
+
+Which module to use for DynamicRouting
+
+=cut
+
+sub dynamic_routing_module { 'Authentication::OAuth::Twitter' }
 
 
 =head2 authorize
