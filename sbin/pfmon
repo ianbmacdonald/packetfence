@@ -53,7 +53,8 @@ use pf::radius_audit_log;
 use pf::StatsD;
 use pf::fingerbank;
 use fingerbank::Config;
-use fingerbank::Util;
+use fingerbank::Redis;
+use fingerbank::DB;
 
 pf::SwitchFactory::preLoadModules();
 
